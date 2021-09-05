@@ -1,5 +1,6 @@
 import sys
 import math
+import time
 import random
 import operator
 
@@ -9,7 +10,7 @@ from deap import gp, creator, base, tools, algorithms
 print("\nNote that this takes a while to run with the current parameters (~30 seonds on my computer). If you want a faster run, feel free to drop the population_size parameter at the top of the code. This will probably give less accurate functions (with higher fitness).")
 
 depth_of_tree = 7
-population_size = 27000
+population_size = 2700
 
 def function_to_find(x):
 	if x <= 0:
@@ -54,6 +55,8 @@ def evaluate_symbol_regression(individual):
 	return (1 / len(float_range_list)) * squared_error,
 
 if __name__ == '__main__':
+	program_t0 = time.time()
+
 	pset = gp.PrimitiveSet("MAIN", 1)
 	pset.addPrimitive(operator.add, 2)
 	pset.addPrimitive(operator.sub, 2)
@@ -102,3 +105,5 @@ if __name__ == '__main__':
 	print("function = {}\n".format(hof[0]))
 	print("fitness = {}".format(evaluate_symbol_regression(hof[0])))
 	print("------------------------------------------------------------\n")
+
+	print(f"program runtime = {time.time() - program_t0}")
